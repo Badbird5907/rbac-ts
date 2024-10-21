@@ -4,14 +4,13 @@
 </p>
 
 <h1 align="center">
-  Hierarchical Role-Based Access Control for Node.js
+  Hierarchical Role-Based Access Control for JS
 </h1>
 
-[![CircleCI](https://circleci.com/gh/phellipeandrade/rbac/tree/master.svg?style=svg)](https://circleci.com/gh/phellipeandrade/rbac/tree/master)
-[![npm version](https://badge.fury.io/js/%40rbac%2Frbac.svg)](https://badge.fury.io/js/%40rbac%2Frbac) 
-[![size](https://img.badgesize.io/https://raw.githubusercontent.com/phellipeandrade/rbac/master/lib/%40rbac/rbac.js.svg)](https://img.badgesize.io/https://raw.githubusercontent.com/phellipeandrade/rbac/master/lib/%40rbac/rbac.js.svg)
-[![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=checkout%20RBAC%20project%20on%20Github!&url=https://github.com/phellipeandrade/rbac&hashtags=rbac,authorization,privacy,security,permission)
+## This is a typescript port of [@rbac/rbac](https://www.npmjs.com/package/@rbac/rbac)
 
+
+[![npm version](https://badge.fury.io/js/rbac-ts.svg)](https://badge.fury.io/js/rbac-ts) 
 
 * ⏱ Lightweight
 * 🔥 Blazing Fast
@@ -25,9 +24,6 @@
 * High granularity in assigning rights
 
 ## Thanks
-
-  This project scaffold was built with a modified version of [webpack-library-starter](https://github.com/krasimir/webpack-library-starter)
-
   Thanks to Karl Düüna ([DeadAlready](https://github.com/DeadAlready)) and his awesome [post on medium](https://blog.nodeswat.com/implement-access-control-in-node-js-8567e7b484d1)
   
   
@@ -35,8 +31,9 @@
 
 #### Install 
 
-`yarn add @rbac/rbac` or `npm install @rbac/rbac`
-
+pnpm: `pnpm add rbac-ts`
+yarn: `yarn add rbac-ts`
+npm: `npm i rbac-ts`
 
 RBAC is a curried function thats initially takes an object with configurations, 
 then returns another function that takes an object with roles, 
