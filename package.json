@@ -1,18 +1,28 @@
 {
-  "name": "@rbac/rbac",
+  "name": "rbac-ts",
   "version": "1.1.0",
   "description": "Blazing Fast, Zero dependency, Hierarchical Role-Based Access Control for Node.js",
-  "main": "lib/@rbac/rbac.min.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "source": "./src/index.ts",
+  "type": "module",
   "scripts": {
-    "build": "webpack --env dev && webpack --env build && npm run test",
+    "build": "tsup",
     "dev": "webpack --progress --colors --watch --env dev",
-    "examples": "node -r @babel/register ./examples/index.js",
-    "test": "NODE_ENV=test mocha --require @babel/register --colors ./test/*.spec.js",
-    "test:watch": "NODE_ENV=test mocha --require @babel/register --colors -w ./test/*.spec.js"
+    "examples": "node ./examples/index.js",
+    "test": "cross-env NODE_ENV=test mocha --colors ./test/*.spec.js",
+    "test:watch": "cross-env NODE_ENV=test mocha --colors -w ./test/*.spec.js"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/phellipeandrade/rbac.git"
+    "url": "https://github.com/Badbird5907/rbac-ts.git"
   },
   "keywords": [
     "rbac",
@@ -24,32 +34,19 @@
     "permission",
     "acl"
   ],
-  "author": "Phellipe Andrade",
+  "author": "Evan Yu",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/phellipeandrade/rbac/issues"
+    "url": "https://github.com/Badbird5907/rbac-ts/issues"
   },
-  "homepage": "https://github.com/phellipeandrade/rbac",
+  "homepage": "https://github.com/Badbird5907/rbac-ts",
   "devDependencies": {
-    "@babel/cli": "^7.0.0-beta.51",
-    "@babel/core": "^7.0.0-beta.51",
-    "@babel/plugin-transform-runtime": "^7.0.0-rc.1",
-    "@babel/preset-env": "^7.0.0-beta.51",
-    "@babel/register": "^7.0.0-beta.51",
-    "@babel/runtime": "^7.0.0-rc.1",
-    "babel-eslint": "^8.0.3",
-    "babel-loader": "^8.0.0-beta.4",
-    "babel-plugin-add-module-exports": "^0.2.1",
-    "babel-plugin-transform-runtime": "^6.23.0",
-    "chai": "^4.1.2",
-    "eslint": "^5.0.1",
-    "eslint-loader": "^2.0.0",
-    "jsdom": "11.11.0",
-    "jsdom-global": "3.0.2",
-    "mocha": "^4.0.1",
-    "uglifyjs-webpack-plugin": "^1.2.7",
-    "webpack": "^4.12.2",
-    "webpack-cli": "^3.0.8",
-    "yargs": "^10.0.3"
-  }
+    "chai": "^5.1.1",
+    "cross-env": "^7.0.3",
+    "eslint": "^9.13.0",
+    "mocha": "^10.7.3",
+    "tsup": "^8.3.0",
+    "typescript": "^5.6.3"
+  },
+  "packageManager": "pnpm@9.12.0+sha512.4abf725084d7bcbafbd728bfc7bee61f2f791f977fd87542b3579dcb23504d170d46337945e4c66485cd12d588a0c0e570ed9c477e7ccdd8507cf05f3f92eaca"
 }

@@ -1,11 +1,7 @@
 /* global describe, it, before */
 
-import chai from 'chai';
-import rbac from '../lib/@rbac/rbac.min';
-
-chai.expect();
-
-const expect = chai.expect;
+import { expect } from 'chai';
+import rbac from '../dist/index.js';
 
 const belongsToAccount = (params, done) => done(null, params);
 
