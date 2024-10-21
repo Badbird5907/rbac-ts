@@ -3,7 +3,7 @@
 import { expect } from 'chai';
 import rbac from '../dist/index.js';
 
-const belongsToAccount = (params, done) => done(null, params);
+const belongsToAccount = (params: any, done: any) => done(null, params);
 
 const PromisebelongsToAccount = new Promise((resolve) => {
   resolve(true);

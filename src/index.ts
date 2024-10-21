@@ -1,2 +1,2 @@
-import RBAC from './rbac.js';
+import RBAC from './rbac';
 export default RBAC;

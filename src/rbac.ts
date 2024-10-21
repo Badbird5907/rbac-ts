@@ -10,9 +10,12 @@ import {
   globsFromFoundedRole
 } from './helpers';
 
+
+type DoneCallback = (err: Error | null, result: unknown) => void;
+
 // Types for role configuration and RBAC structure
 type RoleConfig = {
-  can: string | { name: string; when: any }[];
+  can: string | string[] | { name: string; when: Promise<unknown> | ((params: unknown, done: DoneCallback) => void) }[];
   inherits?: string[];
 };
 
@@ -21,7 +24,7 @@ type MappedRole = {
   inherits?: string[];
 };
 
-type Logger = (role: string, operation: string, result: boolean) => void;
+type Logger = (role: string, operation: string | RegExp, result: boolean) => void;
 
 type Config = {
   logger?: Logger;
@@ -31,12 +34,12 @@ type Config = {
 // The `can` function type
 const can = (config: Config = { logger: defaultLogger, enableLogger: true }) => (
   mappedRoles: Record<string, MappedRole>
-) => (role: string, operation: string, params: unknown): Promise<boolean> =>
+) => (role: string, operation: string | RegExp, params?: unknown): Promise<boolean> =>
   new Promise((resolve, reject) => {
     const foundedRole = mappedRoles[role];
     const regexOperation = regexFromOperation(operation);
     const isGlobOperation = isGlob(operation);
-    const matchOperationFromCan = foundedRole?.can[operation];
+    const matchOperationFromCan = foundedRole?.can[operation as string];
 
     const resolvePromise = (role: string, result: boolean) => {
       if (config.enableLogger) (config.logger || defaultLogger)(role, operation, result);
@@ -67,7 +70,7 @@ const can = (config: Config = { logger: defaultLogger, enableLogger: true }) => 
           .catch(() => resolvePromise(role, false));
       }
       if (isFunction(when)) {
-        return (when as (params: unknown, callback: (err: Error | null, result: unknown) => void) => void)(
+        return (when as (params: unknown, callback: DoneCallback) => void)(
           params,
           (err: Error | null, result: unknown) => {
             if (err) return reject(err);
@@ -86,7 +89,7 @@ const can = (config: Config = { logger: defaultLogger, enableLogger: true }) => 
     }
 
     if (Object.keys(foundedRole.can).some(isGlob)) {
-      const matchOperation = globsFromFoundedRole(foundedRole.can).find((x) => x.regex.test(operation));
+      const matchOperation = globsFromFoundedRole(foundedRole.can).find((x) => x.regex.test(operation as string));
       if (matchOperation) return resolveWhen(matchOperation.when);
     }
 
@@ -122,7 +125,7 @@ const mapRoles = (roles: Record<string, RoleConfig>): Record<string, MappedRole>
 };
 
 // The RBAC function type
-const RBAC = (config: Config) => (roles: Record<string, RoleConfig>) => ({
+const RBAC = (config?: Config) => (roles: Record<string, RoleConfig>) => ({
   can: can(config)(mapRoles(roles))
 });
 

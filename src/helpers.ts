@@ -23,7 +23,7 @@ const joinGlobs = (globs: string[]): string => '((' + globs.map(replaceGlobToReg
 
 const arraySequence = (n: number): number[] => Array.from({ length: n }, (_, i) => i);
 
-export const defaultLogger = (role: string, operation: string, result: boolean | string): void => {
+export const defaultLogger = (role: string, operation: string | RegExp, result: boolean | string): void => {
   const fResult = result ? `${result}` : `${result}`;
   const fRole = `${role}`;
   const fOperation = `${operation}`;
@@ -43,8 +43,8 @@ export const regexFromOperation = (value: string | RegExp): RegExp | null => {
   }
 };
 
-export const globToRegex = (glob: string | string[]): RegExp =>
-  new RegExp('^' + (Array.isArray(glob) ? joinGlobs(glob) : replaceGlobToRegex(glob)) + '$');
+export const globToRegex = (glob: string | string[] | RegExp): RegExp =>
+  new RegExp('^' + (Array.isArray(glob) ? joinGlobs(glob) : replaceGlobToRegex(glob as string)) + '$'); // TODO: fix as string
 
 export const checkRegex = (regex: RegExp, can: Record<string, unknown>): boolean =>
   Object.keys(can).some(operation => regex.test(operation));

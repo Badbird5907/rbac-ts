@@ -1,6 +1,6 @@
 {
   "name": "rbac-ts",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Blazing Fast, Zero dependency, Hierarchical Role-Based Access Control for Node.js",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -8,10 +8,8 @@
   "type": "module",
   "scripts": {
     "build": "tsup",
-    "dev": "webpack --progress --colors --watch --env dev",
     "examples": "node ./examples/index.js",
-    "test": "cross-env NODE_ENV=test mocha --colors ./test/*.spec.js",
-    "test:watch": "cross-env NODE_ENV=test mocha --colors -w ./test/*.spec.js"
+    "test": "ts-mocha -n loader=ts-node/esm -p tsconfig.json test/**/*.spec.ts"
   },
   "exports": {
     ".": {
@@ -41,10 +39,17 @@
   },
   "homepage": "https://github.com/Badbird5907/rbac-ts",
   "devDependencies": {
+    "@types/chai": "^5.0.0",
+    "@types/expect": "^24.3.0",
+    "@types/mocha": "^10.0.9",
     "chai": "^5.1.1",
     "cross-env": "^7.0.3",
     "eslint": "^9.13.0",
+    "jsdom": "^25.0.1",
+    "jsdom-global": "^3.0.2",
     "mocha": "^10.7.3",
+    "ts-mocha": "^10.0.0",
+    "ts-node": "^10.9.2",
     "tsup": "^8.3.0",
     "typescript": "^5.6.3"
   },
